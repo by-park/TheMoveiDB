@@ -344,3 +344,45 @@ footer nav a.rounded {
     padding: 8px 16px;
     transition: linear .1s;
 }
+
+footer nav div {
+    margin-right: 20px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+footer nav h3 {
+    font-weight: bold;
+    font-size: 1.4em;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+}
+
+h3 {
+    margin: 0 0 4px 0;
+}
+
+h1, h2, h3, h4, h5, p {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+footer nav ul li {
+    line-height: 1.6em;
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+}
+
+footer nav ul li a {
+    font-size: 1.2em;
+}
+
+footer nav, footer nav a {
+    color: #fff;
+}
