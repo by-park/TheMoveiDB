@@ -198,6 +198,18 @@ a {
     background: transparent;
 }
 
+footer {
+    height: 450px;
+    box-sizing: border-box;
+    padding: 0;
+    background-image: radial-gradient(at 30% top, #074034 0%, #081c24 70%);
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -273,5 +285,62 @@ div.page_wrap {
     display: flex;
     flex: 1 1 auto;
     min-height: 100%;
-    height: auto
+    height: 1000px; /*auto*/
+}
+
+footer nav {
+    width: 1000px;
+    margin: 0 auto;
+    font-size: .9em;
+}
+
+footer nav, footer nav a {
+    color: #fff;
+}
+
+footer nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer nav div.join {
+    width: 230px;
+    text-align: right;
+    position: relative;
+    top: -36px;
+    right: 0;
+}
+
+footer nav div {
+    margin-right: 20px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+footer nav div.join img {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+footer nav a.rounded {
+    position: relative;
+    top: 140px;
+    border-color: #fff;
+    background-color: #fff;
+    color: #01d277;
+    font-size: 1.3em;
+    font-weight: bold;
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
+    text-transform: uppercase;
+}
+
+.rounded {
+    border: 2px solid #fff;
+    border-radius: 5px;
+    padding: 8px 16px;
+    transition: linear .1s;
 }

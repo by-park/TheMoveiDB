@@ -1,102 +1,141 @@
-// CONFIGURATION:
-var spawn_every_nth_frame = 3;    // when not click 
-var spawn_on_clicked = 3;
-var spawn_on_mousemove = 1;
+/*!
+ * Fairy Dust Cursor.js
+ * - 90's cursors collection
+ * -- https://github.com/tholman/90s-cursor-effects
+ * -- http://codepen.io/tholman/full/jWmZxZ/
+ */
 
-// every frame 
-var particle_start_speed = .75;   // start with this random speed 
-var particle_wobble_speed = .1; // change speed in random 
-var particle_alpha_factor = .98;  // fade out factor for every frame 
-
-function Mover(loc,c) {
-  this.loc = createVector(width/2, height/2);
-  this.vel = createVector();
-  this.acc = createVector();
-  this.r = random(3,7);
-  this.c = c;
-  this.alpha = 1;
+(function fairyDustCursor() {
   
-  if (typeof loc !== "undefined") {
-    this.loc = createVector(loc.x,loc.y);
-  }
-  this.applyForce = function(a) {
-    this.acc.add(a);
-  }
-  this.update = function() {
-    this.vel.add(this.acc);
-    this.acc.mult(0);
-    this.alpha *= particle_alpha_factor;
-    
-    if (this.loc.x < 0 || this.loc.x > width) {
-      this.vel.x *= -.8;
-      if (this.loc.x < 0) this.loc.x = 0;
-      if (this.loc.x > width) this.loc.x = width;
-    }
-    if (this.loc.y < 0 || this.loc.y > height) {
-      this.vel.y *= -.8;
-      if (this.loc.y < 0) this.loc.y = 0;
-      if (this.loc.y > height) this.loc.y = height;
-    }
-    
-    this.loc.add(this.vel);
-  }
-  this.display = function() {
-    fill(this.c, 255,255 , this.alpha);
-    noStroke();
-    ellipse(this.loc.x,this.loc.y, this.r + (1/this.alpha),this.r + (1/this.alpha));
-  }
-}
-
-var movers = [];
-
-function setup() {
-  colorMode(HSB);
-  createCanvas(window.innerWidth,window.innerHeight);   
-  background(50);
+  var possibleColors = ["#D61C59", "#E7D84B", "#1B8798"]
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+  var cursor = {x: width/2, y: width/2};
+  var particles = [];
   
-}
-
-
-function draw() {
-  background(5);
-  
-  if (mouseDown || frameCount%spawn_every_nth_frame==0 ) {    
-    for (var x = 0; x < (mouseDown?spawn_on_clicked:spawn_on_mousemove); x++) {
-      
-      
-      var m = new Mover(createVector(mouseX, mouseY), ((frameCount+128)/ 1 % 360));
-      m.applyForce(createVector(random(-1,1), random(-6,0)).mult(particle_start_speed));
-      movers.push(m);
-    }
+  function init() {
+    bindEvents();
+    loop();
   }
+  
+  // Bind events that are needed
+  function bindEvents() {
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('touchmove', onTouchMove);
+    document.addEventListener('touchstart', onTouchMove);
     
-  for(var x = movers.length -1; x >= 0; x--) {
-    var mov = movers[x];
-    
-    if (mov.alpha < .001) {
-      movers.shift(x);
-    } else {
-    
-      
-     // randomize movement a bit:
-     mov.applyForce(createVector(random(-1,1), random(1,-1)).mult(particle_wobble_speed));
-
-      // enables gravity:
-      mov.applyForce(createVector(0,.25));
-      
-      mov.update();
-      mov.display(); 
+    window.addEventListener('resize', onWindowResize);
+  }
+  
+  function onWindowResize(e) {
+    width = window.innerWidth;
+    height = window.innerHeight;
+  }
+  
+  function onTouchMove(e) {
+    if( e.touches.length > 0 ) {
+      for( var i = 0; i < e.touches.length; i++ ) {
+        addParticle( e.touches[i].clientX, e.touches[i].clientY, possibleColors[Math.floor(Math.random()*possibleColors.length)]);
+      }
     }
   }
   
-}
+  function onMouseMove(e) {    
+    cursor.x = e.clientX;
+    cursor.y = e.clientY;
+    
+    addParticle( cursor.x, cursor.y, possibleColors[Math.floor(Math.random()*possibleColors.length)]);
+  }
+  
+  function addParticle(x, y, color) {
+    var particle = new Particle();
+    particle.init(x, y, color);
+    particles.push(particle);
+  }
+  
+  function updateParticles() {
+    
+    // Updated
+    for( var i = 0; i < particles.length; i++ ) {
+      particles[i].update();
+    }
+    
+    // Remove dead particles
+    for( var i = particles.length -1; i >= 0; i-- ) {
+      if( particles[i].lifeSpan < 0 ) {
+        particles[i].die();
+        particles.splice(i, 1);
+      }
+    }
+    
+  }
+  
+  function loop() {
+    requestAnimationFrame(loop);
+    updateParticles();
+  }
+  
+  /**
+   * Particles
+   */
+  
+  function Particle() {
 
-var mouseDown = false;
+    this.character = "*";
+    this.lifeSpan = 120; //ms
+    this.initialStyles ={
+      "position": "fixed", /*absolute에서 fixed로 변경시 모든 페이지에 다 들어가짐*/
+      "display": "block",
+      "pointerEvents": "none",
+      "z-index": "10000000",
+      "fontSize": "16px",
+      "will-change": "transform"
+    };
 
-function mousePressed() {
-  mouseDown = true;
-}
+    // Init, and set properties
+    this.init = function(x, y, color) {
 
-function mouseReleased() {
-  mouseDown = false;
-}
+      this.velocity = {
+        x:  (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
+        y: 1
+      };
+      
+      this.position = {x: x - 10, y: y - 20};
+      this.initialStyles.color = color;
+      console.log(color);
+
+      this.element = document.createElement('span');
+      this.element.innerHTML = this.character;
+      applyProperties(this.element, this.initialStyles);
+      this.update();
+      
+      document.body.appendChild(this.element);
+    };
+    
+    this.update = function() {
+      this.position.x += this.velocity.x;
+      this.position.y += this.velocity.y;
+      this.lifeSpan--;
+      
+      this.element.style.transform = "translate3d(" + this.position.x + "px," + this.position.y + "px,0) scale(" + (this.lifeSpan / 120) + ")";
+    }
+    
+    this.die = function() {
+      this.element.parentNode.removeChild(this.element);
+    }
+    
+  }
+  
+  /**
+   * Utils
+   */
+  
+  // Applies css `properties` to an element.
+  function applyProperties( target, properties ) {
+    for( var key in properties ) {
+      target.style[ key ] = properties[ key ];
+    }
+  }
+  
+  init();
+})();
