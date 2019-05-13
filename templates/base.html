@@ -1,16 +1,24 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
-      
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    
+    <script src="{% static 'js/carousel.js' %}"></script>
     <title>The Movei Database (TMDb)</title>
   </head>
   <body>
-    {% include 'nav.html' %}
-    {% block body %}
-    
-    {% endblock %}
+    <div class="page_wrap _wrap">
+      {% include 'nav.html' %}
+      {% block body %}
+
+      {% endblock %}
+    </div>  
   </body>
 </html>
