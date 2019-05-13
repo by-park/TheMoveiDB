@@ -23,15 +23,16 @@
     <title>The Movei Database (TMDb)</title>
   </head>
   <body>
-    {% include 'nav.html' %}
     <div class="page_wrap">
-      
-      <div id="main">
-      {% load static %}
-        {% block body %}
-
-        {% endblock %}
-      </div>
+      <header class="normal regular">
+        {% include 'nav.html' %}
+        <div id="main">
+          {% load static %}
+          {% block body %}
+          
+          {% endblock %}
+        </div>
+      </header>
     </div>
     <div>
       {% include 'footer.html' %}

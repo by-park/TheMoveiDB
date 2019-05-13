@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def home(request):
     return render(request, 'movei/home.html')
+  
+def detail(request):
+  return render(request, 'movei/detail.html')
