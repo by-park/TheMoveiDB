@@ -5,6 +5,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
     
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
@@ -26,13 +27,12 @@
     <div class="page_wrap">
       <header class="normal regular">
         {% include 'nav.html' %}
-        <div id="main">
-          {% load static %}
-          {% block body %}
-          
-          {% endblock %}
-        </div>
       </header>
+      <main id="main">
+        {% block body %}
+
+        {% endblock %}
+      </main>
     </div>
     <div>
       {% include 'footer.html' %}
