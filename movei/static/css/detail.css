@@ -1,4 +1,25 @@
-.video-container{
-  position: relative;
-  height: 5;
+.detail_explain {
+  padding: 2rem;
+}
+
+.first-row {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  width: 1000px;
+  display: flex;
+  align-items: center;
+  will-change: height;
+  justify-content: space-between;
+}
+
+.first-row>section {
+  padding: 2rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 20px;
+}
+
+.image_size {
+  height: 384px;
+  width: 256px;
 }
