@@ -1,0 +1,277 @@
+.left {
+    float: left
+}
+
+.right {
+    float: right
+}
+
+.k-autocomplete {
+    width: 12.4em;
+    padding-right: calc(0.75rem + 16px);
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease
+}
+
+.k-widget {
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    outline: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    display: block;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent
+}
+
+.k-autocomplete,
+.k-combobox,
+.k-dateinput,
+.k-datepicker,
+.k-datetimepicker,
+.k-dropdown,
+.k-dropdowntree,
+.k-multiselect,
+.k-numerictextbox,
+.k-maskedtextbox,
+.k-timepicker,
+.k-dropdowntree {
+    width: 12.4em;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: left;
+    white-space: nowrap;
+    display: inline-flex;
+    vertical-align: middle;
+    position: relative
+}
+
+main {
+    box-sizing: border-box;
+    padding-top: 158px;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+}
+
+.k-widget,
+.k-block,
+.k-panel {
+    color: #292b2c;
+    background-color: #ffffff;
+    border-color: rgba(33, 37, 41, 0.125)
+}
+
+.k-autocomplete,
+.k-combobox .k-dropdown-wrap,
+.k-datepicker .k-picker-wrap,
+.k-timepicker .k-picker-wrap,
+.k-datetimepicker .k-picker-wrap,
+.k-dateinput .k-dateinput-wrap,
+.k-input,
+.k-textbox,
+.k-textarea,
+.k-input.k-textbox,
+.k-multiselect-wrap,
+.k-numerictextbox .k-numeric-wrap {
+    color: #acacac;
+    align-items: center;
+    position: absolute;
+    background-color: #ffffff;
+    border-color: rgba(33, 37, 41, 0.15)
+}
+
+.k-autocomplete,
+.k-dateinput-wrap,
+.k-dropdown-wrap,
+.k-picker-wrap,
+.k-multiselect-wrap,
+.k-numeric-wrap {
+    border-radius: 0.25rem;
+    padding: 0;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    position: relative;
+    transition: all .1s ease;
+    cursor: default;
+    outline: 0
+}
+
+ul {
+    list-style-type: none;
+    line-height: 1.4em
+}
+
+header ul li.logo img {
+    display: block;
+    will-change: height, width
+}
+
+img,
+a img {
+    outline: none
+}
+
+img {
+    border: 0
+}
+
+section.search {
+    width: 100%;
+    background-color: #fff;
+    height: 46px;
+    border-bottom: 1px solid #dedede
+}
+
+section.search span.k-autocomplete {
+    width: 100% !important;
+    border: none !important;
+    background-color: transparent !important;
+    box-sizing: border-box !important;
+    transition: all 0s !important
+}
+
+header div.sub_media {
+    position: relative;
+    top: 0;
+    left: 0
+}
+
+header div.sub_media div.left {
+    max-width: 60%
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #081c24;
+    width: 100%;
+    z-index: 999;
+    height: 158px
+}
+
+header>div.content {
+    height: 111px;
+    margin: 0 auto;
+    width: 1000px;
+    display: flex;
+    align-items: center;
+    will-change: height
+}
+
+header div.left ul.primary li {
+    text-align: right;
+    padding: 10px 0
+}
+
+header div.left ul li {
+    margin-right: 30px;
+    padding: 0
+}
+
+header ul li.logo {
+    position: relative;
+    top: 3px;
+    width: 81px;
+    height: 72px
+}
+
+header a {
+    color: #fff;
+    font-weight: 600
+}
+
+header div.sub_media div.right {
+    max-width: 40%
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+    font-weight: normal;
+    background: transparent;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    height: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    background-color: #fff;
+    color: #000;
+    font-display: auto;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+section.search span.k-autocomplete .k-input {
+    border: none;
+    border-radius: 0;
+    padding: 0 30px;
+    height: 46px;
+    box-sizing: border-box
+}
+
+section.search form input[type=text] {
+    width: 100%;
+    height: 46px;
+    border: none !important;
+    outline: none;
+    font-family: Arial, sans-serif;
+    font-style: italic;
+    font-size: 100%;
+    line-height: 1.2em;
+    color: #acacac;
+    box-sizing: border-box;
+    text-indent: 0;
+    padding-left: 30px;
+    padding-right: 30px
+}
+
+header ul {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    height: 72px;
+    box-sizing: border-box
+}
+
+*, ::after, ::before {
+    box-sizing: content-box;
+}
+
+div.sub_media {
+    width: 1000px;
+    margin: 0 auto
+}
+
+section.search form {
+    display: block
+}
+
+header div.right li,
+header ul.right li {
+    margin-left: 30px
+}
+
+body,
+ul {
+    margin: 0;
+    padding: 0
+}
+
+div.page_wrap {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 100%;
+    height: auto
+}

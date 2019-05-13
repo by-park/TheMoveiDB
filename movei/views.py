@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def home(request):
     return render(request, 'movei/home.html')
+
+def test(request):
+    return render(request, 'movei/test_carousel.html')
