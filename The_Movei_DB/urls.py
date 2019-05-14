@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from movei import views
+from movei import views as movei_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home),
+    path('', movei_views.home, name = "home"),
     path('movei/', include('movei.urls')),
+    path('account/', include('account.urls')),
 ]

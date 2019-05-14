@@ -1,11 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 # Create your models here.
-class Movei(models.Model):
-  title_ko = models.CharField(max_length=200)
-  title_en = models.CharField(max_length=200)
-  year = models.IntegerField()
+class Profile(models.Model):
+  user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+  nickname = models.CharField(max_length=40,blank=True)
   genre_Action = models.BooleanField(default=True)
   genre_Adventure = models.BooleanField(default=True)
   genre_Animation = models.BooleanField(default=True)
@@ -24,9 +24,5 @@ class Movei(models.Model):
   genre_War = models.BooleanField(default=True)
   genre_Western = models.BooleanField(default=True)
   
-  like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = "like_movei", blank = True)
-  
-class Comment(models.Model):
-  user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-  movei = models.ForeignKey(Movei, on_delete = models.CASCADE)
-  content = models.CharField(max_length = 140)
+  def __str__(self):
+    return f"{self.user.username}의 프로필, 닉네임 : {self.nickname}"
