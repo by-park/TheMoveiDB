@@ -1,4 +1,57 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1> 진짜 삭제하실 건가요 ㅠㅠ</h1>
+<div class="nope_content">
+  <section class="delete_top">
+    <h1 class="nope_title">Are you sure delete your account?</h1>
+    <p>Without our 'themoveidb' service, your life will always fail.</p>
+  </section>
+  <section>
+    <h3 class="nope_comment">Look at these movies. Are you sure delete your account?</h3>
+    <hr>
+    <div class="nope_reco">
+      {% for movie in movies %}
+      <section>
+        <a href="{% url 'movei:detail' movie.id %}"><img width="325px" height="475px" src="{{ movie.poster_url }}"></a>
+        <p class="nope_movie">{{ movie.title_ko }}</p>
+        <div class="nope_like" id="app{{ forloop.counter }}">
+          {% if user in movie.like_users.all %}
+            <i v-show="clicked" @click="like({{ movie.id }})" class="fa fa-heart detail_pointer"></i>
+            <i v-show="!clicked" @click="like({{ movie.id }})" class="far fa-heart detail_pointer"></i>
+          {% else %}
+            <i v-show="clicked" @click="like({{ movie.id }})" class="far fa-heart detail_pointer"></i>
+            <i v-show="!clicked" @click="like({{ movie.id }})" class="fa fa-heart detail_pointer"></i>
+          {% endif %}
+          <p id="movie_count">{{ movie.like_users.count }}</p>
+        </div>
+      </section>
+      {% endfor %}
+    </div>
+  </section>
+  <form method="POST">
+      {% csrf_token %}
+      <button class="delete_button" type="submit">
+        Delete account
+      </button>
+    </form>
+</div>
+{% for child in childs %}
+<script>
+new Vue({
+      el: '#app{{ child }}',
+      data: {
+        clicked: true,
+      },
+      methods: {
+        like: function(movie_id) {
+          axios.get(`/api/v1/like/${movie_id}/`)
+          .then((response)=>{
+              this.clicked = !this.clicked
+              const movie_count = document.querySelector('#app{{ child }} #movie_count');
+              movie_count.innerText = +movie_count.innerText - (+this.clicked-0.5)*2
+          })
+        },
+      },
+    })
+</script>
+{% endfor %}
 {% endblock %}

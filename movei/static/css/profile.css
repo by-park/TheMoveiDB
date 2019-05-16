@@ -1,0 +1,93 @@
+.profile_content {
+  width: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 20px;
+}
+
+.profile_movies {
+  height: 100%;
+}
+
+.profile_header {
+  background-image: url('https://www.themoviedb.org/assets/2/v4/account_pipes/light_blue-0f97154ae86b931070cb20789ef70bfcc1b259bc28cfb1b41ab9afe169683174.svg');
+  background-color: #081e26;
+  background-repeat: no-repeat;
+  background-position: center -200px;
+  position: relative;
+  padding: 40px 0;
+  height: 225px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.profile_body {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.profile_inner_content {
+  width: 1000px;
+  display: flex;
+}
+
+.profile_img {
+  margin-top: 1rem;
+  border-radius: 50%;
+}
+
+.profile_nickname {
+  margin-top: 10px;
+  color: #879bad;
+}
+
+.profile_profile {
+  width: 100%;
+  height: 100px;
+  padding: 0.5rem 2rem 0 2rem;
+}
+
+.profile_ud {
+  width: 100%;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #aeaeae;
+}
+
+.profile_update {
+  color: #aeaeae;
+}
+
+.profile_delete {
+  color: #aeaeae;
+}
+
+.profile_body_title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #05505f;
+  height:50px;
+}
+
+.profile_body_title_inner{
+  width: 1000px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.profile_inner_right {
+  display: block;
+  width: 100%;
+}
+
+.profile_inner_body {
+  width: 1000px;
+  display: flex;
+}
+
+.profile_movie_card {
+  margin-right: 20px;
+}

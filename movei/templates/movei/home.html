@@ -2,24 +2,24 @@
 {% load static %}
 {% block body %}
 
-<div id="app">
+<div>
   <div class="slider-container">
 
     <div class="slider-content">
     
     {% for movie in movies %}
-      <div class="slider-single">
+      <div class="slider-single" id="app{{ forloop.counter }}">
         <a href="{% url 'movei:detail' movie.id %}"><img class="slider-single-image" src="{{movie.poster_url}}" alt="1" id="movie_poster1"/></a>
         <!-- <a class="slider-single-download" href="javascript:void(0);">자세히 보기</a> -->
-        <h1 class="slider-single-title" id="movie_title1">{{movie.title_ko}}</h1>
+        <h1 class="slider-single-title" id="movie_title1">{{ movie.title_ko }}</h1>
         <a class="slider-single-likes" href="javascript:void(0);">
-      <!--버튼을 클릭하면, 좋아요할 수 있는 버튼-->
+            <!--버튼을 클릭하면, 좋아요할 수 있는 버튼-->
         {% if user.is_authenticated and user in movie.like_users.all %}
-          <i v-show="clicked" @click="like({{movie.id}})" class="fa fa-heart"></i>
-          <i v-show="!clicked" @click="like({{movie.id}})" class="far fa-heart"></i>
+          <i v-if="clicked" @click="like({{movie.id}})" class="fa fa-heart"></i>
+          <!-- <i v-if="!clicked" @click="like({{movie.id}})" class="far fa-heart"></i> -->
         {% else %}
-          <i v-show="clicked" @click="like({{movie.id}})" class="far fa-heart"></i>
-          <i v-show="!clicked" @click="like({{movie.id}})" class="fa fa-heart"></i>
+          <!-- <i v-if="clicked" @click="like({{movie.id}})" class="far fa-heart"></i> -->
+          <i v-if="!clicked" @click="like({{movie.id}})" class="fa fa-heart"></i>
           <!-- <i @click="like({{movie.id}})" class="{'fa':liked, 'fa-heart':true, 'far':!liked}"></i> -->
         {% endif %}
           <p id="movie_count">{{ movie.like_users.count }}</p>
@@ -34,22 +34,40 @@
 
   </div>
 </div>
+<!-- {% for child in childs %}
 <script>
-    const app = new Vue({
-      el: '#app',
+    const app{{child}} = new Vue({
+      el: '#app{{child}}',
       data: {
-        clicked: true,
+        clicked: true //{1:true, 2:true, 3:true}
       },
       methods: {
+        // change_class: function(event){
+        //     alert('뜨긴뜨나?')
+        //     // var parent = event.target.parentElement.id;
+        //     const movie_count = document.querySelector('#movie_count{{child}}');
+        //     alert(movie_count.innerText)
+        //     if (event.target.className == 'far fa-heart'){                
+        //         event.target.className = 'fa fa-heart'
+        //         movie_count.innerText = +movie_count.innerText + +1
+        //     }
+        //     else{
+        //         event.target.className = 'far fa-heart'
+        //         movie_count.innerText = +movie_count.innerText - +1
+        //     }
+        // },
         like: function(movie_id) {
+        console.log(movie_id)
           axios.get(`/api/v1/like/${movie_id}/`)
           .then((response)=>{
+              console.log('왜!!!!')
               this.clicked = !this.clicked
-              const movie_count = document.querySelector('#movie_count');
+              const movie_count = document.querySelector('#app{{child}} #movie_count');
               movie_count.innerText = +movie_count.innerText - (+this.clicked-0.5)*2
           })
         },
       },
     })
   </script>
+{% endfor %} -->
 {% endblock %}

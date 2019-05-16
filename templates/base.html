@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <link rel="stylesheet" href="{% static 'css/wave_input.css' %}">
     <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/404.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carousel2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/delete.css' %}">
     
     <!-- Vue-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -48,6 +52,23 @@
             const current_user = 2
         {% endif %}
     </script>
+    
+    <!-- 사용자 정의 함수 -->
+    <!-- <script>
+        function myFunc(e) {
+            if (e.target.className == 'far fa-heart'){
+                e.target.className = 'fa fa-heart'
+            }
+            else{
+                e.target.className = 'far fa-heart'
+            }
+        }
+        function click_like(movie_id){
+            const XHR = new XMLHttpRequest();
+            XHR.open('GET', `/api/v1/like/${movie_id}/`);
+            XHR.send();
+        }
+    </script> -->
       
     <title>The Movei Database (TMDb)</title>
   </head>

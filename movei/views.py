@@ -2,15 +2,14 @@ import os
 import random
 import requests
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Movei
+from .models import Movei, Comment
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+from .forms import CommentForm
 
 # Create your views here.  
 def home(request):
-    # check = 0
-    # movies = [0] * 3
-    
         # 선택한 장르를 불러와서 취향 중에서 골라줘야한다.
     if request.user.is_authenticated:
         movie1 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
@@ -22,37 +21,23 @@ def home(request):
         movie3 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
 
     movies = [Movei.objects.get(id=movie1['id']), Movei.objects.get(id=movie2['id']), Movei.objects.get(id=movie3['id'])]
-        # selected_movies = random.sample(range(1, Movei.objects.count()+1), 3)
-    # while check == 0: # 3 개 다 데이터가 있을 때까지 뽑기!
-    #     for i in range(3):
-    #         movie_name = Movei.objects.get(pk=selected_movies[i]).title_ko
-    #         tmdb_url = "https://api.themoviedb.org/3/search/movie"
-    #         tmdb_params = {
-    #             'api_key': os.getenv('TMDB_KEY'),
-    #             'query': movie_name,
-    #             'language': 'ko'
-    #         }
-    #         tmdb_res = requests.get(tmdb_url, params=tmdb_params).json()['results']
-    #         if len(tmdb_res) < 1:
-    #             break
-    #         else:
-    #             tmdb_res = tmdb_res[0]
-    #             print(tmdb_res)
-    #             if tmdb_res['poster_path'] == None:
-    #                 break
-    #                 # poster_path = static('images/default.jpg')
-    #             else:
-    #                 poster_path = 'https://image.tmdb.org/t/p/w500' +tmdb_res['poster_path']
-    #                 movies[i] = {'title_ko':tmdb_res['title'], 'poster_url':poster_path, 'id':Movei.objects.get(pk=selected_movies[i]).id}
-    #                 print(Movei.objects.get(pk=selected_movies[0]).title_ko)
-                    
-    #     else:
-    #         check = 1
-    return render(request, 'movei/home.html', {'movies':movies, 'tmdb_key':os.getenv('TMDB_KEY')})
+    childs = [1, 2, 3]
+    return render(request, 'movei/home.html', {'movies':movies, 'tmdb_key':os.getenv('TMDB_KEY'), 'childs':childs})
   
 def detail(request, movie_id):
+    detail_dict = {}
     if movie_id == 1234567890:
-        return render(request, 'movei/404.html')
+      if request.user.is_authenticated:
+        movie1 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
+        movie2 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
+        movie3 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
+      else:
+          movie1 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json() # 유령 유저 하나 만들어서 default로 잡아줘야한다
+          movie2 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
+          movie3 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
+      movies = [Movei.objects.get(id=movie1['id']), Movei.objects.get(id=movie2['id']), Movei.objects.get(id=movie3['id'])]
+      childs = [1, 2, 3]
+      return render(request, 'movei/404.html', {'movies':movies, 'childs':childs})
     movie = Movei.objects.get(pk=movie_id)
     movie_name = movie.title_ko
     movie_year = movie.year
@@ -99,14 +84,16 @@ def detail(request, movie_id):
         naver_res['directors'] = naver_res['items'][0]['director'].split('|')[:3]
         naver_res['actors'] = naver_res['items'][0]['actor'].split('|')[:3]
     print(naver_res)
-    tmdb_res_detail.update(naver_res)
+    # tmdb_res_detail.update(naver_res)
     like_users = movie.like_users.all()
     if request.user in like_users:
         user_dict = {'liked': True, 'movie_id': movie.id, 'movie_count':len(like_users)}
     else:
         user_dict = {'liked': False, 'movie_id': movie.id, 'movie_count':len(like_users)}
-    tmdb_res_detail.update(user_dict)
-    return render(request, 'movei/detail.html', tmdb_res_detail)
+    # tmdb_res_detail.update(user_dict)
+    comment_form = CommentForm()
+    detail_dict = {'tmdb':tmdb_res_detail, 'naver_res':naver_res, 'user_dict':user_dict, 'movie':movie, 'comment_form':comment_form}
+    return render(request, 'movei/detail.html', detail_dict)
 # {'movei_title':movie['title_ko'], 'poster_url':movie['poster_url'], 'movei_year':movie_year}
 
 def search(request):
@@ -126,12 +113,30 @@ def search(request):
         movie = Movei.objects.get(title_ko=movie_name)
     return redirect('movei:detail', movie.id)
 
+@login_required
+@require_http_methods(["POST"])
 def create(request, movie_id):
-    
-    pass
+    movie = Movei.objects.get(id=movie_id)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user = request.user
+        comment.movei = movie
+        comment.save()
+    return redirect('movei:detail', movie_id)
 
+@login_required
+@require_http_methods(["POST"])
 def update(request, comment_id):
-    pass
+    comment = Comment.objects.get(id=comment_id)
+    form = CommentForm(request.POST, instance=comment)
+    if form.is_valid():
+        form.save()
+    return redirect('movei:detail', comment.movei.id)
 
 def delete(request, comment_id):
-    pass
+    # request.user와 comment_id의 user가 같으면 삭제
+    comment = Comment.objects.get(id=comment_id)
+    if request.user == comment.user:
+        comment.delete()
+    return redirect('movei:detail', comment.movei.id)

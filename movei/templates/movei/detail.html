@@ -1,50 +1,47 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<div class="detail_content" id="app">
+<div class="detail_content">
   <section class="detail_inner">
     <div class="detail_poster">
-      <img width="300px" height="450px" src="{{ poster_path }}">
+      <img width="300px" height="450px" src="{{ tmdb.poster_path }}">
     </div>
     <div class="detail_right_section">
       <section class="detail_right">
         <div class="detail_info">
           <h2 class="detail_title">
-            {{ title }}
+            {{ tmdb.title }}
           </h2>
-          <span class="detail_year">({{ release_date }})</span>
+          <span class="detail_year">({{ tmdb.release_date }})</span>
         </div>
         <div class="detail_scores">
           <div class="detail_circle_percent">
             <div class="second circle col-lg-3 detail_circle">
             </div>
             <div class="detail_percent">
-              <strong>{{ vote_average }}<i>%</i></strong>
+              <strong>{{ tmdb.vote_average }}<i>%</i></strong>
             </div>
           </div>
           <div class="detail_scores_text">
             user<br>score
           </div>
-            
-            {% if liked %}
-            <i v-show="clicked" @click="like({{movie_id}})" class="fa fa-heart"></i>
-            <i v-show="!clicked" @click="like({{movie_id}})" class="far fa-heart"></i>
+          <div class="detail_like" id="app">
+            {% if user_dict.liked %}
+              <i v-show="clicked" @click="like({{movie.id}})" class="fa fa-heart detail_pointer"></i>
+              <i v-show="!clicked" @click="like({{movie.id}})" class="far fa-heart detail_pointer"></i>
             {% else %}
-          <i v-show="clicked" @click="like({{movie_id}})" class="far fa-heart"></i>
-          <i v-show="!clicked" @click="like({{movie_id}})" class="fa fa-heart"></i>
-          
-
-            <!-- <i @click="like({{movie.id}})" class="{'fa':liked, 'fa-heart':true, 'far':!liked}"></i> -->
+              <i v-show="clicked" @click="like({{movie.id}})" class="far fa-heart detail_pointer"></i>
+              <i v-show="!clicked" @click="like({{movie.id}})" class="fa fa-heart detail_pointer"></i>
             {% endif %}
-            <p id="movie_count">{{ movie_count }}</p>
-            
+            <p id="movie_count">{{ user_dict.movie_count }}</p>
+          </div>
         </div>
         <div class="detail_str">
           <h3 class="detail_overview">
             Overview
           </h3>
           <div>
-            {{ overview }}
+            {{ tmdb.overview }}
           </div>
         </div>
         <div class="detail_gad">
@@ -54,7 +51,7 @@
             </h3>
             <div class="detail_gad_info">
               <ul class="detail_gad_info">
-                 {% for genre in genres %}
+                 {% for genre in tmdb.genres %}
                 <li>{{ genre.name }}</li>
                   {% endfor %}
               </ul>
@@ -66,7 +63,7 @@
             </h3>
             <div class="detail_gad_info">
               <ul class="detail_gad_info">
-                 {% for actor in actors %}
+                 {% for actor in naver_res.actors %}
                 <li>{{ actor }}</li>
                   {% endfor %}
               </ul>
@@ -78,7 +75,7 @@
             </h3>
             <div>
               <ul class="detail_gad_info">
-                  {% for director in directors %}
+                  {% for director in naver_res.directors %}
                 <li>{{ director }}</li>
                   {% endfor %}
               </ul>
@@ -90,6 +87,21 @@
   </section>
 </div>
 <div class="detail_comment">
+  <section class="detail_write">
+    <div class="detail_comment_title">
+      <h3>Write</h3>
+    </div>
+    <hr>
+    <div class="detail_comment_form">
+      <form action="{% url 'movei:create' movie.id %}" method="POST">
+        {% csrf_token %}
+        <textarea placeholder="Describe yourself within 140 characters." maxlength="140" class="detail_textarea" name="content"></textarea>
+        <button class="detail_button" type="submit">
+          Write
+        </button>
+      </form>
+    </div>
+  </section>
   <section class="detail_comment_section">
     <div class="detail_comment_title">
       <h3>Comment</h3>
@@ -98,56 +110,39 @@
     <table class="detail_table">
       <thead>
         <tr class="detail_tr">
-          <th>Subject</th>
-          <th class="detail_th">Created at</th>
+          <th class="detail_th_subject">Subject</th>
+          <th class="detail_th_created_at">Created at</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
+          {% for comment in movie.comment_set.all reversed %}
         <tr class="detail_tr">
           <td class="detail_subject">
-            도랐나, 죽고싶나 !
+            {{ comment.content }}
           </td>
           <td class="detail_created_at">
-            May 15, 2019 at 9:24 AM<br>
-            by <span class="detail_commenter">pok_winter</span>
+            {{ comment.updated_at|date:"M d, Y" }} at {{ comment.updated_at|time:"h:i A" }}<br>
+            by <span class="detail_commenter"> {{ comment.user.profile.nickname }}</span>
           </td>
+          <td class="detail_delete"><a href="{% url 'movei:delete' comment.id %}" class="detail_comment_delete"><i class="fas fa-times"></i></a></td>
         </tr>
-        <tr class="detail_tr">
-          <td class="detail_subject">
-            이게 뭐가 재밌는데 
-          </td>
-          <td class="detail_created_at">
-            May 15, 2019 at 9:24 AM<br>
-            by <span class="detail_commenter">bo</span>
-          </td>
-        </tr>
-        <tr class="detail_tr">
-          <td class="detail_subject">
-            너무 재밌게 봤어요 
-          </td>
-          <td class="detail_created_at">
-            May 15, 2019 at 9:24 AM<br>
-            by <span class="detail_commenter">pok_winter</span>
-          </td>
-        </tr>
+          {% endfor %}
       </tbody>
     </table>
   </section>
-  <secion class="detail_section_right">
-    <div class="detail_comment_title">
-      <h3>여기는 뭐 넣징</h3>
-    </div>
-    <hr>
-  </secion>
 </div>
+
 <script src="{% static 'js/circle-progress.js' %}"></script>
 <script>
-  $('.second.circle').circleProgress({
-      value: {{ vote_average_point }}
-  }).on('circle-animation-progress', function(event, progress) {
-      $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
-  });
-    const app = new Vue({
+$('.second.circle').circleProgress({
+    value: {{ tmdb.vote_average_point }}
+}).on('circle-animation-progress', function(event, progress) {
+    $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
+});
+</script>
+<script>
+const app = new Vue({
       el: '#app',
       data: {
         clicked: true,

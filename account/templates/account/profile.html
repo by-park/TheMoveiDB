@@ -1,14 +1,38 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>{{profile.user.username}} 님의 페이지!</h1>
-<p>
-    좋아요한 영화들
-    <ul>
+{% load static %}
+<div class="profile_content">
+  <section class="profile_header">
+    <div class="profile_inner_content">
+      <span><img class="profile_img" alt="avartar" width="180" height="180" src="{% static 'images/avartar.jpg' %}"></span>
+      <div class="profile_inner_right">
+        <div class="profile_profile">
+          <h1>{{ profile.user.username }}</h1>
+          <h4 class="profile_nickname">{{ profile.nickname }}</h4>
+          <div class="profile_ud">
+            <!-- <div>
+              <a href="{% url 'account:change_profile' %}" class="profile_update">Edit Profile</a>
+            </div> -->
+            <div>
+              <a href="{% url 'account:delete' %}" class="profile_update">Delete Profile</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="profile_body_title">
+    <p class="profile_body_title_inner">Favorite Movies</p>
+  </div>
+  <div class="carousel right">
+    <div class="wrap">
+      <ul>
         {% for movei in profile.user.like_moveis.all %}
-        <a href="{% url 'movei:detail' movei.id %}"><li>{{ movei.title_ko }}</li></a>
+        <li><a href="{% url 'movei:detail' movei.id %}"><img src="{{ movei.poster_url }}"/></a></li>
         {% endfor %}
-    </ul>
-</p>
-<a href="{% url 'account:change_profile' %}">회원 정보 변경</a>
-<a href="{% url 'account:delete' %}">회원 탈퇴</a>
+      </ul>
+      </div>
+  </div>
+</div>
+<script src="{% static 'js/carousel2.js' %}"></script>
 {% endblock %}

@@ -79,22 +79,18 @@ $(document).on('ready', function() {
     proactiveSlide.removeClass('preactivede preactive active proactivede').addClass('proactive');
   }
     
-  function pushToDom(title, poster_url, movie_id){
+  function pushToDom(title, poster_url, movie_id, like_users){
         movie_area.innerHTML += `<div class="slider-single">
         <a href="https://themoveidb.run.goorm.io/movei/detail/${movie_id}"><img class="slider-single-image" src="${poster_url}" alt="movie_poster"/></a>
         <h1 class="slider-single-title">${title}</h1>
-        <a class="slider-single-likes" href="javascript:void(0)"> <!--void(0) -->
-          <!--<i v-show="clicked" class="fa fa-heart" id='id_heart'></i>-->
-          <i v-show="!clicked" class="far fa-heart"></i>
-          <p>0</p>
+        <a class="slider-single-likes" href="javascript:void(0)">
+        <i style="display:inline;" class="fa fa-heart"></i>
+          <!-- <i style="display:inline;" class="far fa-heart"  onclick="javascript:myFunc(event); click_like(${movie_id});"></i> -->
+          <p>${like_users}</p>
         </a>
       </div>`;
   }
-  var heart = $('#id_heart');
-  heart.on('click', function(){
-      console.log('클릭했다구');
-      slideRight();
-  });
+
   function searchAndPush(URL){
     const XHR = new XMLHttpRequest();
     XHR.open('GET', URL);
@@ -104,7 +100,7 @@ $(document).on('ready', function() {
         const rawData = e.target.response;
         console.log(rawData);
         const parsedData = JSON.parse(rawData);
-        pushToDom(parsedData.title_ko, parsedData.poster_url, parsedData.id);
+        pushToDom(parsedData.title_ko, parsedData.poster_url, parsedData.id, parsedData.like_users.length);
       });
   }
                          
@@ -130,6 +126,6 @@ $(document).on('ready', function() {
     slide = $('.slider-single');
     slideTotal = slide.length - 1;
     slideRight();  
-  },1000000);
+  },40000);
 });
 

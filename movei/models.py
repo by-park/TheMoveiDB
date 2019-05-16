@@ -25,7 +25,7 @@ class Movei(models.Model):
   genre_War = models.BooleanField(default=True)
   genre_Western = models.BooleanField(default=True)
   
-  like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = "like_movei", blank = True)
+  like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = "like_moveis", blank = True)
   
   def __str__(self):
     return f"{self.year} / {self.title_ko} / {self.title_en}"
@@ -34,3 +34,5 @@ class Comment(models.Model):
   user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
   movei = models.ForeignKey(Movei, on_delete = models.CASCADE)
   content = models.CharField(max_length = 140)
+  created_at = models.DateTimeField(auto_now_add=True)
+  updated_at = models.DateTimeField(auto_now=True)

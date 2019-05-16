@@ -1,0 +1,37 @@
+.nope_content {
+  margin: 0 auto;
+  width: 1000px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.nope_title {
+  margin-bottom: 8px;
+}
+
+.nope_top {
+  margin-bottom: 5rem;
+}
+
+.nope_comment{
+  margin-bottom: 8px;
+}
+
+.nope_reco {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.nope_movie {
+  font-weight: 400;
+  font-size: 20px;
+  margin-top: 8px;
+}
+
+.nope_like {
+    display: flex;
+    width: 50px;
+    align-items: center;
+}

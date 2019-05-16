@@ -8,6 +8,8 @@ from .forms import UserProfileForm
 from django.http import QueryDict
 from .models import Profile 
 from django.views.decorators.http import require_http_methods
+from movei.models import Movei
+import requests
 
 # Create your views here.
 def login(request):
@@ -59,14 +61,24 @@ def signup(request):
 def delete(request):
   if request.method == "POST":
     request.user.delete()
-    return redirect('accounts:signup')
+    return redirect('account:signup')
   else:
-    return render(request, 'account/delete.html')
+    if request.user.is_authenticated:
+        movie1 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
+        movie2 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
+        movie3 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
+    else:
+        movie1 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json() # 유령 유저 하나 만들어서 default로 잡아줘야한다
+        movie2 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
+        movie3 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
+    movies = [Movei.objects.get(id=movie1['id']), Movei.objects.get(id=movie2['id']), Movei.objects.get(id=movie3['id'])]
+    childs = [1, 2, 3]
+    return render(request, 'account/delete.html', {'movies':movies, 'childs':childs})
 
 @login_required
 def profile(request):
-    profile = Profile.objects.get(user=request.user)
-    return render(request, 'account/profile.html', {'profile':profile})
+  profile = Profile.objects.get(user=request.user)
+  return render(request, 'account/profile.html', {'profile':profile})
 
 @login_required
 @require_http_methods(["GET", "POST"])

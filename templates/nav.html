@@ -9,9 +9,11 @@
               <img src="{% static 'images/logo.svg' %}" alt="The Movei Database (TMDb)" width="81" height="72">
             </a>
           </li>
+            {% if user.is_authenticated %}
           <li>
             <a href="{% url 'account:profile' %}">MY MOVIES</a>
           </li>
+            {% endif %}
           <li>
             <a href="{% url 'etc:about' %}">ABOUT</a>
           </li>
