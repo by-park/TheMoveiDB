@@ -2,62 +2,30 @@
 {% load static %}
 {% block body %}
 
-<div>
+<div id="app">
   <div class="slider-container">
 
     <div class="slider-content">
-
+    
+    {% for movie in movies %}
       <div class="slider-single">
-        <img class="slider-single-image" src="http://img.movist.com/?img=/x00/05/12/35_p1.jpg" alt="1"/>
+        <a href="{% url 'movei:detail' movie.id %}"><img class="slider-single-image" src="{{movie.poster_url}}" alt="1" id="movie_poster1"/></a>
         <!-- <a class="slider-single-download" href="javascript:void(0);">자세히 보기</a> -->
-        <h1 class="slider-single-title">어벤저스</h1>
+        <h1 class="slider-single-title" id="movie_title1">{{movie.title_ko}}</h1>
         <a class="slider-single-likes" href="javascript:void(0);">
-          <i class="fa fa-heart"></i>
-          <p>1,247</p>
+      <!--버튼을 클릭하면, 좋아요할 수 있는 버튼-->
+        {% if user.is_authenticated and user in movie.like_users.all %}
+          <i v-show="clicked" @click="like({{movie.id}})" class="fa fa-heart"></i>
+          <i v-show="!clicked" @click="like({{movie.id}})" class="far fa-heart"></i>
+        {% else %}
+          <i v-show="clicked" @click="like({{movie.id}})" class="far fa-heart"></i>
+          <i v-show="!clicked" @click="like({{movie.id}})" class="fa fa-heart"></i>
+          <!-- <i @click="like({{movie.id}})" class="{'fa':liked, 'fa-heart':true, 'far':!liked}"></i> -->
+        {% endif %}
+          <p id="movie_count">{{ movie.like_users.count }}</p>
         </a>
       </div>
-
-      <div class="slider-single">
-        <img class="slider-single-image" src="http://img.movist.com/?img=/x00/05/05/14_p1.jpg" alt="2" />
-        <!-- <a class="slider-single-download" href="javascript:void(0);">자세히 보기</a> -->
-        <h1 class="slider-single-title">엄복동</h1>
-        <a class="slider-single-likes" href="javascript:void(0);">
-          <i class="fa fa-heart"></i>
-          <p>1,247</p>
-        </a>
-      </div>
-
-      <div class="slider-single">
-        <img class="slider-single-image" src="http://t2.gstatic.com/images?q=tbn:ANd9GcTXOdTp0xTDTUwGF6j-er6054j7aC8zAk4IpPsIBFLyfThx7hTd" alt="3" />
-        <!-- <a class="slider-single-download" href="javascript:void(0);">자세히 보기</a> -->
-        <h1 class="slider-single-title">악인전</h1>
-        <a class="slider-single-likes" href="javascript:void(0);">
-          <i class="fa fa-heart"></i>
-          <p>1,247</p>
-        </a>
-      </div>
-
-
-      <div class="slider-single">
-        <img class="slider-single-image" src="http://img.movist.com/?img=/x00/05/14/24_p1.jpg" alt="4" />
-        <!-- <a class="slider-single-download" href="javascript:void(0);">Download <i class="fa fa-download"></i></a> -->
-        <h1 class="slider-single-title">명탐정 피카츄</h1>
-        <a class="slider-single-likes" href="javascript:void(0);">
-          <i class="fa fa-heart"></i>
-          <p>1,247</p>
-        </a>
-      </div>
-
-
-      <div class="slider-single">
-        <img class="slider-single-image" src="http://img.movist.com/?img=/x00/05/14/97_p1.jpg" alt="5" />
-        <!-- <a class="slider-single-download" href="javascript:void(0);">Download <i class="fa fa-download"></i></a> -->
-        <h1 class="slider-single-title">라플라스의 마녀</h1>
-        <a class="slider-single-likes" href="javascript:void(0);">
-          <i class="fa fa-heart"></i>
-          <p>1,247</p>
-        </a>
-      </div>
+    {% endfor %}
 
     </div>
 
@@ -66,5 +34,22 @@
 
   </div>
 </div>
-
+<script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        clicked: true,
+      },
+      methods: {
+        like: function(movie_id) {
+          axios.get(`/api/v1/like/${movie_id}/`)
+          .then((response)=>{
+              this.clicked = !this.clicked
+              const movie_count = document.querySelector('#movie_count');
+              movie_count.innerText = +movie_count.innerText - (+this.clicked-0.5)*2
+          })
+        },
+      },
+    })
+  </script>
 {% endblock %}

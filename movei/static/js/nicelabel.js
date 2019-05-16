@@ -1,4 +1,13 @@
-
+﻿/*!
+ *nicelabel JQuery Plugin
+ *
+ *@file: jquery-nicelabel.js version 1.0
+ *@author: PJY
+ *@date: 2016/05/15
+ *@site: http://www.cat666.com/
+ *@license: MIT License
+ */
+ 
 ;(function( $ ){
 	
 	$.fn.nicelabel = function(options) {
@@ -199,3 +208,12 @@
 	};
 	
 }( jQuery ));
+
+function myFunction() {
+  var x = document.getElementById("input-3");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}

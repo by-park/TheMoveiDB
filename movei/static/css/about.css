@@ -1,0 +1,49 @@
+.about_content {
+  margin: 0 auto;
+  width: 700px;
+  padding: 2rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 20px;
+}
+
+.about_title {
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.about_explain {
+  font-size: 18px;
+  line-height: 2rem;
+  margin-bottom: 2rem;
+}
+
+.about_a {
+  color: #00d573;
+}
+
+.about_section {
+  display: flex;
+}
+
+.about_developer {
+  margin-bottom: 15px;
+}
+
+.about_block1 {
+  display: inline-block;
+  width: 100%;
+  margin-right: 5px;
+}
+
+.about_last {
+  margin-top: 3rem;
+}
+.about_block2 {
+  display: inline-block;
+  width: 100%;
+}
+
+.about_ul {
+  margin-bottom: 15px;
+}

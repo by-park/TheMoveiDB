@@ -8,7 +8,7 @@ from .models import Profile
 class UserProfileForm(forms.ModelForm):
   class Meta:
     model = Profile
-    fields = ['genre_Action','genre_Adventure','genre_Animation','genre_Comedy','genre_Crime','genre_Documentary','genre_Drama','genre_Family','genre_Fantasy','genre_Horror','genre_Music','genre_Mystery','genre_Romance','genre_SF','genre_Thriller','genre_War','genre_Western',]
+    fields = ['nickname','genre_Action','genre_Adventure','genre_Animation','genre_Comedy','genre_Crime','genre_Documentary','genre_Drama','genre_Family','genre_Fantasy','genre_Horror','genre_Music','genre_Mystery','genre_Romance','genre_SF','genre_Thriller','genre_War','genre_Western',]
     labels = {
       'genre_Action':'액션',
       'genre_Adventure':'어드벤처',
@@ -28,7 +28,7 @@ class UserProfileForm(forms.ModelForm):
       'genre_War':'전쟁',
       'genre_Western':'서부',
     }
-    
+
 class UserCreationMultiForm(MultiModelForm):
   form_classes = {
     'user': UserCreationForm,

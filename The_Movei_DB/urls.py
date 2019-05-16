@@ -18,8 +18,10 @@ from django.urls import path, include
 from movei import views as movei_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', movei_views.home, name = "home"),
-    path('movei/', include('movei.urls')),
-    path('account/', include('account.urls')),
+  path('admin/', admin.site.urls),
+  path('', movei_views.home, name = "home"),
+  path('movei/', include('movei.urls')),
+  path('account/', include('account.urls')),
+  path('etc/', include('etc.urls')),
+  path('api/v1/', include('api.urls')),
 ]

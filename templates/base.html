@@ -2,11 +2,25 @@
 <html lang="en">
   <head>
     {% load static %}
+    
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}">
+    
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
     <link rel="stylesheet" href="{% static 'css/detail.css' %}">
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nicelabel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/wave_input.css' %}">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    
+    <!-- Vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
@@ -22,6 +36,18 @@
     <!-- Mouse effect -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js'></script>
     <script src="{% static 'js/mouseeffect.js'%}"></script>
+    
+    <!-- Input effect -->
+    <script src="{% static 'js/inputeffect.js'%}" type='text/javascript'></script>
+    
+    <!-- 영화 추천을 위한 current user -->
+    <script>
+        {% if user.is_authenticated %}
+            const current_user = {{ user.id }}
+        {% else %}
+            const current_user = 2
+        {% endif %}
+    </script>
       
     <title>The Movei Database (TMDb)</title>
   </head>

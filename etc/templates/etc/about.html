@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class="about_content">
+  <h1 class="about_title">
+    Let's talk about TMDb
+  </h1>
+  <p class="about_explain">
+    The Movei Database(TMDb) is super-random-movie-recommendation site. So You can find every movies which you like in our movie database. Uri neun use the db from <a href="https://www.themoviedb.org/" class="about_a">themoviedb.org</a>. Gamsahapnida ^_^<br>
+    If you use our service, u can show the '10,000'gae numneun movies. So plz <a href="{% url 'account:signup' %}" class="about_a">click here</a> to get started !<br><br>
+    Also I want to introduce our developer !<br>
+  </p>
+  <section class="about_section">
+    <div class="about_block1">
+      <h2 class="about_developer">
+        Boraemong
+      </h2>
+      <div>
+        <ul class="about_ul">
+          <li>> Bus Driver</li>
+          <li>> Mad scientist</li>
+        </ul>
+      </div>
+      <p>
+        She is the leader of annyeng hasalbub. She made moden back-end in this website and also ilbubun's front-end.<br>
+        She is the salt, light in this team.
+      </p>
+    </div>
+    <div class="about_block2">
+      <h2 class="about_developer">
+        Ggo dong
+      </h2>
+      <div>
+        <ul class="about_ul">
+          <li>> Bus Passenger</li>
+          <li>> Just student</li>
+        </ul>
+      </div>
+      <p>
+        He is just... um... teammate. He made front-end and design the website. That's it.<br>
+        He want to be shutterman like dongju-ssaem.
+      </p>
+    </div>
+  </section>
+  <p class="about_last">
+    If themoviedb officials see our website and also want to scout us, just send the e-mail to 'pok_winter@naver.com'.<br>
+    Thank you and enjoy our service ^_^
+  </p>
+</div>
+{% endblock %}

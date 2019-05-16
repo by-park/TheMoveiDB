@@ -19,18 +19,24 @@
             <a href="">TV SHOWS</a>
           </li>
           <li>
-            <a href="">PEOPLE</a>
+            <a href="{% url 'etc:about' %}">ABOUT</a>
           </li>
         </ul>
       </div>
       <div class="right">
         <ul class="primary">
-          <li>
-            <a href="/login">LOGIN</a>
-          </li>
-          <li>
-            <a href="{% url 'account:signup' %}">SIGN UP</a>
-          </li>
+          {% if not user.is_authenticated %}
+            <li>
+              <a href="{% url 'account:login' %}">LOGIN</a>
+            </li>
+            <li>
+              <a href="{% url 'account:signup' %}">SIGN UP</a>
+            </li>
+          {% else %}
+            <li>
+              <a href="{% url 'account:logout' %}">LOGOUT</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -39,7 +45,8 @@
   <div class="search_bar">
     <section class="search">
       <div class="sub_media">
-        <form id="search_form" action="/search" method="get" accept-charset="utf-8">
+        <form id="search_form" action="{% url 'movei:search' %}" method="post" accept-charset="utf-8">
+            {% csrf_token %}
           <span tabindex="-1" role="presentation" class="k-widget k-autocomplete k-header k-autocomplete-clearable k-state-default">
             <i stlye="color:green" class="fas fa-search"></i>
             <input dir="auto" id="search_v4" name="query" type="text" tabindex="0" autocorrect="off" autofill="off" autocomplete="off" spellcheck="false" placeholder="Search for a movie">

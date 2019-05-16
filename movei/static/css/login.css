@@ -26,6 +26,11 @@
   margin-left: 10px;
 }
 
+.login_showpassword {
+  margin-top: 15px;
+  font-size: 15px;
+}
+
 .login_button {
   color: #ffffff;
   background-color: #01d277;

@@ -1,36 +1,31 @@
 {% load static %}
 <style>
   footer {
-    background-image: url('https://www.themoviedb.org/assets/2/v4/footers_v2/Minions-7626a4bff6ef7b6a7afa6a8641278e23b094d6a882da4129d9a8928d05b3b911.jpg'), radial-gradient(at 30% top, rgba(7, 64, 52, 1) 0%, rgba(8, 28, 36, 1) 70%);
+    background-image: url('{{randomSite()}}'), radial-gradient(at 30% top, rgba(7, 64, 52, 1) 0%, rgba(8, 28, 36, 1) 70%);
   }
 </style>
 <footer class="single_column lazyboard">
   <nav>
     <div class="join">
       <img src="{% static 'images/logo.svg' %}" alt="The Movie Database (TMDb)" width="130" height="116">
-      <a class="rounded" href="/accounts/signup">SIGN UP</a>
+      {% if not user.is_authenticated %}
+      <a class="rounded" href="/account/signup">SIGN UP</a>
+      {% endif %}
     </div>
     <div>
       <h3>
         The BASICS
       </h3>
       <ul>
-        <li>
-          <a href="https://www.themoviedb.org/">TheMovieDB</a>
-        </li>
-        <li>
-          <a href="https://www.kobis.or.kr/">KOBIS</a>
-        </li>
+        <li><a href="https://www.themoviedb.org/">TheMovieDB</a></li>
+        <li><a href="https://www.kobis.or.kr/">KOBIS</a></li>
+        <li><a href="https://movie.naver.com/">Naver Movie</a></li>
       </ul>
     </div>
     <div>
-      <h3>
-        Community
-      </h3>
+      <h3>Community</h3>
       <ul>
-        <li>
-          <a href="">Instagram</a>
-        </li>
+        <li><a href="https://www.instagram.com/pok_winter/">Instagram</a></li>
       </ul>
     </div>
     <div>
@@ -58,3 +53,17 @@
     </div>
   </nav>
 </footer>
+<a href="javascript:openSite()">Click to go to a random site</a>
+<script>
+  var sites = [ "https://www.themoviedb.org/assets/2/v4/footers_v2/TheDarkKnight-7bc76e8795dbf0a2ac7995f4e47f330ba3d4a58ffe952ab86582f666ab0215e9.jpg",
+               "https://www.themoviedb.org/assets/2/v4/footers_v2/IronMan-f01af499111f9be05deb806fdaf52e2d138fefa1fae09f33339348c032923d15.jpg",
+                "https://www.themoviedb.org/assets/2/v4/footers_v2/FamilyGuy-157ce987f45266a74584f1b695db2e23edb6e14b600bdd8ea1aa27edd710a3fb.jpg",
+                "https://www.themoviedb.org/assets/2/v4/footers_v2/Minions-7626a4bff6ef7b6a7afa6a8641278e23b094d6a882da4129d9a8928d05b3b911.jpg"];
+
+ function randomSite() {
+  var i = parseInt(Math.random() * sites.length);
+  console.log(i)
+  location = sites[i];
+ return location
+}
+</script>

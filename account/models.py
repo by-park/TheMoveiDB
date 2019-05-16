@@ -25,4 +25,4 @@ class Profile(models.Model):
   genre_Western = models.BooleanField(default=True)
   
   def __str__(self):
-    return f"{self.user.username}의 프로필, 닉네임 : {self.nickname}"
+    return f"{self.user.id} / {self.user.username} / {self.nickname}"

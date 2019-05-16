@@ -40,6 +40,8 @@ INSTALLED_APPS = [
   'betterforms',
   'movei',
   'account',
+  'rest_framework',
+  'etc',
 ]
 
 MIDDLEWARE = [

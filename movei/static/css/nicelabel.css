@@ -1,3 +1,13 @@
+﻿/*!
+ *nicelabel JQuery Plugin
+ *
+ *@file: jquery-nicelabel.js
+ *@author: PJY
+ *@date: 2016/05/15
+ *@site: http://www.cat666.com/
+ *@license: MIT License
+ */
+
 *{
 	margin:0px;
 	padding:0px;
@@ -12,6 +22,7 @@
 	display:none !important;
 }
 
+/**圆形按钮**/
 .circle-nicelabel + label {
 	display:block;
 	width:64px;
@@ -52,6 +63,7 @@
 	opacity: 0.5;
 }	
 
+/**矩形按钮**/	
 .rect-nicelabel + label {
 	display:block;
 	width:64px;
@@ -89,10 +101,12 @@
 	opacity: 0.5;
 }	
 
+/**文本按钮**/
 .text-nicelabel + label {
+	font: 13px "Microsoft Yahei";
 	display: table;
-	font-size: 12px;
-	padding: 10px 15px 10px 10px;
+	font-size: 11px;
+	padding: 10px 20px 10px 10px;
 	background-color:rgba(0,140,186,1);
 	color: #b3b3b3;
 	border-radius:5px;
@@ -128,6 +142,8 @@
 }
 .text-nicelabel:not(:checked) + label 
 {
+  display: inline-block;
+  margin: 5px;
 	background-color: #DDDDDD;
 	color: #a7a7a7;
 }
@@ -141,6 +157,8 @@
 }
 .text-nicelabel:checked + label 
 {
+  display: inline-block;
+  margin: 5px;
 	background-color: rgba(0,140,186,1);
 	color: #fff;
 }

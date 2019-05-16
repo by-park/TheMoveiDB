@@ -2,13 +2,16 @@
 {% load static %}
 {% block body %}
 <div class="signup_content">
-  <section class="content bgcolor-1">
-    <h2>Sign up</h2>
-    <form method="POST">
-      {% csrf_token %}
+  <form method="POST">
+    {% csrf_token %}
+    <section class="signup_main">
+      <h2 class="signup_title">Sign up</h2>
+      <p>
+        Signing up for an account is free and easy. Fill out the form below to get started. JavaScript is required to to continue.
+      </p>
       <div class="input input--nao">
-        <input class="input__field input__field--nao" type="text" id="input-1"/>
-        <label class="input__label input__label--nao" for="input-1">
+        <input class="input__field input__field--nao" type="text" id="input-10" name="username"/>
+        <label class="input__label input__label--nao" for="input-0">
           <span class="input__label-content input__label-content--nao">Username</span>
         </label>
         <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
@@ -16,8 +19,8 @@
         </svg>
       </div>
       <div class="input input--nao">
-        <input class="input__field input__field--nao" type="text" id="input-3" />
-        <label class="input__label input__label--nao" for="input-3">
+        <input class="input__field input__field--nao" type="text" id="input-11" name="nickname"/>
+        <label class="input__label input__label--nao" for="input-1">
           <span class="input__label-content input__label-content--nao">Nickname</span>
         </label>
         <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
@@ -25,7 +28,7 @@
         </svg>
       </div>
       <div class="input input--nao">
-        <input class="input__field input__field--nao" type="text" id="input-2" />
+        <input class="input__field input__field--nao" type="password" id="input-12" name="password1"/>
         <label class="input__label input__label--nao" for="input-2">
           <span class="input__label-content input__label-content--nao">Password</span>
         </label>
@@ -34,7 +37,7 @@
         </svg>
       </div>
       <div class="input input--nao">
-        <input class="input__field input__field--nao" type="text" id="input-3" />
+        <input class="input__field input__field--nao" type="password" id="input-13" name="password2"/>
         <label class="input__label input__label--nao" for="input-3">
           <span class="input__label-content input__label-content--nao">Password Confirm</span>
         </label>
@@ -42,12 +45,54 @@
           <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
         </svg>
       </div>
-      <a href="">
+      <p class="signup_showpassword"><input type="checkbox" onclick="myFunction()"> Show Password</p>
+      <p>
+        By clicking the "Sign up" button below, I certify that I have read and agree to the TMDb terms of use and privacy policy
+      </p>
+      <a href="{% url 'account:signup' %}">
         <button type = "submit" class = "signup_button">
           Sign up
         </button>
       </a>
-    </form>
-  </section>
+      <a href="{% url 'home' %}" class="signup_cancel">
+        Cancel
+      </a>
+    </section>
+    <section class="signup_sidebar">
+      <div class="signup_card">
+        <div class="signup_top">
+          <p>
+            You Might Like !!
+          </p>
+        </div>
+        <div class="signup_bottom">
+          {% for form in forms %}
+          {% if form.label != "비밀번호" and form.label != "사용자 이름" and form.label != "비밀번호 확인"  and form.label != "Nickname" %}
+            <input class="text-nicelabel" data-nicelabel="{&quot;position_class&quot;: &quot;text_checkbox&quot;, &quot;checked_text&quot;: &quot;Checked&quot;, &quot;unchecked_text&quot;: &quot;jQuery&quot;}" checked="" type="checkbox" id="nicelabel-{{ form.label }}" name="{{ form.label }}">
+            <label class="text_checkbox" for="nicelabel-{{ form.label }}"><span class="nicelabel-unchecked-image" style="background-image: url({% static 'ico/unchecked.png' %});"></span><span class="nicelabel-unchecked">{{ form.label }}</span><span class="nicelabel-checked-image" style="background-image: url({% static 'ico/checked.png' %});"></span><span class="nicelabel-checked">{{ form.label }}</span></label>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </form>
 </div>
+<script src="{% static 'js/nicelabel.js' %}"></script>
+<script src="{% static 'js/inputeffect.js' %}"></script>
+<script>
+  function myFunction() {
+    var x = document.getElementById("input-13");
+    var y = document.getElementById("input-12");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+    if (y.type === "password") {
+      y.type = "text";
+    } else {
+      y.type = "password";
+    }
+  }
+</script>
 {% endblock %}

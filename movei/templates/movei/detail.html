@@ -1,16 +1,167 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-  <iframe width="100%" height="45%" src="https://www.youtube.com/embed/TcMBFSGVi1c?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  <div class="first-row">
-    <section class="detail_poster"> <!-- 영화 포스터 -->
-      <img class="image_size" src="http://img.movist.com/?img=/x00/05/12/35_p1.jpg" alt="어벤져스"/>
-    </section>
-    <section> <!-- 영화 정보 -->
-      너무 재밌어요
-    </section>
-    <section> <!-- 영화 코멘트 -->
-      깔깔
-    </section>
-  </div>
+<div class="detail_content" id="app">
+  <section class="detail_inner">
+    <div class="detail_poster">
+      <img width="300px" height="450px" src="{{ poster_path }}">
+    </div>
+    <div class="detail_right_section">
+      <section class="detail_right">
+        <div class="detail_info">
+          <h2 class="detail_title">
+            {{ title }}
+          </h2>
+          <span class="detail_year">({{ release_date }})</span>
+        </div>
+        <div class="detail_scores">
+          <div class="detail_circle_percent">
+            <div class="second circle col-lg-3 detail_circle">
+            </div>
+            <div class="detail_percent">
+              <strong>{{ vote_average }}<i>%</i></strong>
+            </div>
+          </div>
+          <div class="detail_scores_text">
+            user<br>score
+          </div>
+            
+            {% if liked %}
+            <i v-show="clicked" @click="like({{movie_id}})" class="fa fa-heart"></i>
+            <i v-show="!clicked" @click="like({{movie_id}})" class="far fa-heart"></i>
+            {% else %}
+          <i v-show="clicked" @click="like({{movie_id}})" class="far fa-heart"></i>
+          <i v-show="!clicked" @click="like({{movie_id}})" class="fa fa-heart"></i>
+          
+
+            <!-- <i @click="like({{movie.id}})" class="{'fa':liked, 'fa-heart':true, 'far':!liked}"></i> -->
+            {% endif %}
+            <p id="movie_count">{{ movie_count }}</p>
+            
+        </div>
+        <div class="detail_str">
+          <h3 class="detail_overview">
+            Overview
+          </h3>
+          <div>
+            {{ overview }}
+          </div>
+        </div>
+        <div class="detail_gad">
+          <div class="detail_block">
+            <h3 class="detail_gad_header">
+              장르
+            </h3>
+            <div class="detail_gad_info">
+              <ul class="detail_gad_info">
+                 {% for genre in genres %}
+                <li>{{ genre.name }}</li>
+                  {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="detail_block">
+            <h3 class="detail_gad_header">
+              배우
+            </h3>
+            <div class="detail_gad_info">
+              <ul class="detail_gad_info">
+                 {% for actor in actors %}
+                <li>{{ actor }}</li>
+                  {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="detail_block">
+            <h3 class="detail_gad_header">
+              감독
+            </h3>
+            <div>
+              <ul class="detail_gad_info">
+                  {% for director in directors %}
+                <li>{{ director }}</li>
+                  {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>
+<div class="detail_comment">
+  <section class="detail_comment_section">
+    <div class="detail_comment_title">
+      <h3>Comment</h3>
+    </div>
+    <hr>
+    <table class="detail_table">
+      <thead>
+        <tr class="detail_tr">
+          <th>Subject</th>
+          <th class="detail_th">Created at</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="detail_tr">
+          <td class="detail_subject">
+            도랐나, 죽고싶나 !
+          </td>
+          <td class="detail_created_at">
+            May 15, 2019 at 9:24 AM<br>
+            by <span class="detail_commenter">pok_winter</span>
+          </td>
+        </tr>
+        <tr class="detail_tr">
+          <td class="detail_subject">
+            이게 뭐가 재밌는데 
+          </td>
+          <td class="detail_created_at">
+            May 15, 2019 at 9:24 AM<br>
+            by <span class="detail_commenter">bo</span>
+          </td>
+        </tr>
+        <tr class="detail_tr">
+          <td class="detail_subject">
+            너무 재밌게 봤어요 
+          </td>
+          <td class="detail_created_at">
+            May 15, 2019 at 9:24 AM<br>
+            by <span class="detail_commenter">pok_winter</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <secion class="detail_section_right">
+    <div class="detail_comment_title">
+      <h3>여기는 뭐 넣징</h3>
+    </div>
+    <hr>
+  </secion>
+</div>
+<script src="{% static 'js/circle-progress.js' %}"></script>
+<script>
+  $('.second.circle').circleProgress({
+      value: {{ vote_average_point }}
+  }).on('circle-animation-progress', function(event, progress) {
+      $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
+  });
+    const app = new Vue({
+      el: '#app',
+      data: {
+        clicked: true,
+      },
+      methods: {
+        like: function(movie_id) {
+          axios.get(`/api/v1/like/${movie_id}/`)
+          .then((response)=>{
+              this.clicked = !this.clicked
+              const movie_count = document.querySelector('#movie_count');
+              movie_count.innerText = +movie_count.innerText - (+this.clicked-0.5)*2
+          })
+        },
+      },
+    })
+</script>
 {% endblock %}
