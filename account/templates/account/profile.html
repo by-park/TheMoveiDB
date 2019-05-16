@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>{{profile.user.username}} 님의 페이지!</h1>
+<p>
+    좋아요한 영화들
+    <ul>
+        {% for movei in profile.user.like_moveis.all %}
+        <a href="{% url 'movei:detail' movei.id %}"><li>{{ movei.title_ko }}</li></a>
+        {% endfor %}
+    </ul>
+</p>
+<a href="{% url 'account:change_profile' %}">회원 정보 변경</a>
+<a href="{% url 'account:delete' %}">회원 탈퇴</a>
+{% endblock %}

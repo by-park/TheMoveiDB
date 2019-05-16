@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserCreationMultiForm
 from .forms import UserProfileForm
 from django.http import QueryDict
+from .models import Profile 
+from django.views.decorators.http import require_http_methods
 
 # Create your views here.
 def login(request):
@@ -60,3 +62,22 @@ def delete(request):
     return redirect('accounts:signup')
   else:
     return render(request, 'account/delete.html')
+
+@login_required
+def profile(request):
+    profile = Profile.objects.get(user=request.user)
+    return render(request, 'account/profile.html', {'profile':profile})
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def change_profile(request):
+    profile = Profile.objects.get(user=request.user)
+    if request.method == "POST":
+        profile_form = UserProfileForm(request.POST, instance=profile)
+        if profile_form.is_valid():
+            profile_form.save()
+        return redirect('account:profile')
+    else:
+        form = UserProfileForm
+        return render(request, 'account/change_profile.html', {'profile':profile, 'profile_form': profile_form})
+    
