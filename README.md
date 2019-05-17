@@ -37,6 +37,7 @@
 ### 5. 서비스 아키텍처
 
 - ERD model (사용한 프로그램: [https://dbdiagram.io/](https://dbdiagram.io/))
+![ERD model](https://github.com/BY1994/TheMoveiDB/blob/master/ERD_model.PNG)
 - 관리자 페이지 (/admin): 관리자는 영화 수정, 삭제 및 유저 수정 삭제 권한이 있습니다.
 - 회원가입, 로그인, 회원탈퇴가 가능합니다.
 - 로그인한 유저는 좋아요 기능, 한줄평 작성 기능을 사용할 수 있습니다.
