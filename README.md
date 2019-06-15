@@ -74,6 +74,7 @@
 ​	**v. 배포 서버 URL**
 
 - themoveidb.org 도메인은 가비아를 통해 운영중이며, 도메인 유효 기간은 2019-05-13 ~ 2020-05-13 입니다.
+- Heroku 도메인은 [https://themoveidb.herokuapp.com/](https://themoveidb.herokuapp.com/) 입니다.
 
 ​	**vi. 기타(느낀점)**
 
