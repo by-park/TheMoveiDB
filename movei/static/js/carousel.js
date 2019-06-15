@@ -10,7 +10,7 @@ $(document).on('ready', function() {
     slide.addClass('proactivede');
     setTimeout(function() {
       slideRight();
-    }, 500);
+    }, 300);
   }
 
   function slideRight() {
