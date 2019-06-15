@@ -8,17 +8,19 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from .forms import CommentForm
 
+my_api_url = 'https://themoveidb.herokuapp.com'
+
 # Create your views here.  
 def home(request):
         # 선택한 장르를 불러와서 취향 중에서 골라줘야한다.
     if request.user.is_authenticated:
-        movie1 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
-        movie2 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
-        movie3 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
+        movie1 = requests.get(f'{my_api_url}/api/v1/users/{request.user.id}/').json()
+        movie2 = requests.get(f'{my_api_url}/api/v1/users/{request.user.id}/').json()
+        movie3 = requests.get(f'{my_api_url}/api/v1/users/{request.user.id}/').json()
     else:
-        movie1 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json() # 유령 유저 하나 만들어서 default로 잡아줘야한다
-        movie2 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
-        movie3 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
+        movie1 = requests.get(f'{my_api_url}/api/v1/users/2/').json() # 유령 유저 하나 만들어서 default로 잡아줘야한다
+        movie2 = requests.get(f'{my_api_url}/api/v1/users/2/').json()
+        movie3 = requests.get(f'{my_api_url}/api/v1/users/2/').json()
 
     movies = [Movei.objects.get(id=movie1['id']), Movei.objects.get(id=movie2['id']), Movei.objects.get(id=movie3['id'])]
     childs = [1, 2, 3]
@@ -28,13 +30,13 @@ def detail(request, movie_id):
     detail_dict = {}
     if movie_id == 1234567890:
       if request.user.is_authenticated:
-        movie1 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
-        movie2 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
-        movie3 = requests.get(f'https://themoveidb.run.goorm.io/api/v1/users/{request.user.id}/').json()
+        movie1 = requests.get(f'{my_api_url}/api/v1/users/{request.user.id}/').json()
+        movie2 = requests.get(f'{my_api_url}/api/v1/users/{request.user.id}/').json()
+        movie3 = requests.get(f'{my_api_url}/api/v1/users/{request.user.id}/').json()
       else:
-          movie1 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json() # 유령 유저 하나 만들어서 default로 잡아줘야한다
-          movie2 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
-          movie3 = requests.get('https://themoveidb.run.goorm.io/api/v1/users/2/').json()
+          movie1 = requests.get(f'{my_api_url}/api/v1/users/2/').json() # 유령 유저 하나 만들어서 default로 잡아줘야한다
+          movie2 = requests.get(f'{my_api_url}/api/v1/users/2/').json()
+          movie3 = requests.get(f'{my_api_url}/api/v1/users/2/').json()
       movies = [Movei.objects.get(id=movie1['id']), Movei.objects.get(id=movie2['id']), Movei.objects.get(id=movie3['id'])]
       childs = [1, 2, 3]
       return render(request, 'movei/404.html', {'movies':movies, 'childs':childs})
