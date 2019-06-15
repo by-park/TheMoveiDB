@@ -47,7 +47,7 @@ def detail(request, movie_id):
     movie_year = movie.year
     tmdb_url = "https://api.themoviedb.org/3/search/movie"
     tmdb_params = {
-        'api_key': os.environ.get('TMDB_KEY', True)
+        'api_key': os.environ.get('TMDB_KEY', True),
 #        'api_key': os.getenv('TMDB_KEY'),
         'query': movie_name,
         'language': 'ko'
@@ -73,7 +73,7 @@ def detail(request, movie_id):
     
     naver_url = "https://openapi.naver.com/v1/search/movie.json"
     naver_headers = {
-      'X-Naver-Client-Id': os.environ.get('NAVER_ID', True)
+      'X-Naver-Client-Id': os.environ.get('NAVER_ID', True),
       'X-Naver-Client-Secret': os.environ.get('NAVER_SECRET', True)
     }
 
