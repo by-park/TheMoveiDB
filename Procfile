@@ -1,0 +1,1 @@
+web: gunicorn The_Movei_DB.wsgi
