@@ -8,10 +8,9 @@ $(document).on('ready', function() {
     
   function slideInitial() {
     slide.addClass('proactivede');
-    // 기존 영화 데이터를 밀어내기
-    setTimeout(function() {
-      slideRight();
-    }, 4000);
+    // setTimeout(function() {
+      // slideRight();
+    // }, 4000);
   }
 
   function slideRight() {
@@ -126,7 +125,7 @@ $(document).on('ready', function() {
   
   // 매 시간마다 동작하는 함수 설정
   setInterval(function(){
-    const URL = `https://themoveidb.herokuapp.com.io/api/v1/users/${current_user}/`; //movies/${random}
+    const URL = `https://themoveidb.herokuapp.com/api/v1/users/${current_user}/`; //movies/${random}
     searchAndPush(URL);
     slide = $('.slider-single');
     slideTotal = slide.length - 1;
