@@ -81,7 +81,7 @@ $(document).on('ready', function() {
     
   function pushToDom(title, poster_url, movie_id, like_users){
         movie_area.innerHTML += `<div class="slider-single">
-        <a href="https://themoveidb.run.goorm.io/movei/detail/${movie_id}"><img class="slider-single-image" src="${poster_url}" alt="movie_poster"/></a>
+        <a href="https://themoveidb.herokuapp.com/movei/detail/${movie_id}"><img class="slider-single-image" src="${poster_url}" alt="movie_poster"/></a>
         <h1 class="slider-single-title">${title}</h1>
         <a class="slider-single-likes" href="javascript:void(0)">
         <i style="display:inline;" class="fa fa-heart"></i>
