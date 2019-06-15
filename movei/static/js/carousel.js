@@ -8,9 +8,10 @@ $(document).on('ready', function() {
     
   function slideInitial() {
     slide.addClass('proactivede');
-    // setTimeout(function() {
-    //   slideRight();
-    // }, 500);
+    // 기존 영화 데이터를 밀어내기
+    setTimeout(function() {
+      slideRight();
+    }, 4000);
   }
 
   function slideRight() {
