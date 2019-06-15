@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from .forms import CommentForm
 
+# heroku 배포 (2019.06.15) 이후 추가된 내용
 my_api_url = 'https://themoveidb.herokuapp.com'
 
 # Create your views here.  
@@ -24,8 +25,9 @@ def home(request):
 
     movies = [Movei.objects.get(id=movie1['id']), Movei.objects.get(id=movie2['id']), Movei.objects.get(id=movie3['id'])]
     childs = [1, 2, 3]
-    return render(request, 'movei/home.html', {'movies':movies, 'tmdb_key':os.getenv('TMDB_KEY'), 'childs':childs})
-  
+    #return render(request, 'movei/home.html', {'movies':movies, 'tmdb_key':os.getenv('TMDB_KEY'), 'childs':childs})
+    return render(request, 'movei/home.html', {'movies':movies, 'tmdb_key':os.environ.get('TMDB_KEY', True), 'childs':childs})
+    
 def detail(request, movie_id):
     detail_dict = {}
     if movie_id == 1234567890:
@@ -45,14 +47,16 @@ def detail(request, movie_id):
     movie_year = movie.year
     tmdb_url = "https://api.themoviedb.org/3/search/movie"
     tmdb_params = {
-        'api_key': os.getenv('TMDB_KEY'),
+        'api_key': os.environ.get('TMDB_KEY', True)
+#        'api_key': os.getenv('TMDB_KEY'),
         'query': movie_name,
         'language': 'ko'
     }
     tmdb_res_id = requests.get(tmdb_url, params=tmdb_params).json()['results'][0]['id']
     tmdb_url_detail = f"https://api.themoviedb.org/3/movie/{tmdb_res_id}"
     tmdb_params_detail = {
-        'api_key': os.getenv('TMDB_KEY'),
+        #'api_key': os.getenv('TMDB_KEY'),
+        'api_key': os.environ.get('TMDB_KEY', True),
         'language': 'ko'
     }
 
@@ -69,8 +73,8 @@ def detail(request, movie_id):
     
     naver_url = "https://openapi.naver.com/v1/search/movie.json"
     naver_headers = {
-      'X-Naver-Client-Id': os.getenv('NAVER_ID'),
-      'X-Naver-Client-Secret': os.getenv('NAVER_SECRET')
+      'X-Naver-Client-Id': os.environ.get('NAVER_ID', True)
+      'X-Naver-Client-Secret': os.environ.get('NAVER_SECRET', True)
     }
 
     naver_params = {
@@ -101,7 +105,8 @@ def detail(request, movie_id):
 def search(request):
     tmdb_url = "https://api.themoviedb.org/3/search/movie"
     tmdb_params = {
-        'api_key': os.getenv('TMDB_KEY'),
+        #'api_key': os.getenv('TMDB_KEY'),
+        'api_key': os.environ.get('TMDB_KEY', True),
         'query': request.POST['query'],
         'language': 'ko'
     }
