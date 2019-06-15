@@ -113,7 +113,7 @@ $(document).on('ready', function() {
   });
   right.on('click', function() {
     // 내가 직접 수정한 부분 새로운 영화 데이터를 받아오는 곳    
-    const URL = `https://themoveidb.run.goorm.io/api/v1/users/${current_user}/`; //movies/${random}
+    const URL = `https://themoveidb.herokuapp.com/api/v1/users/${current_user}/`; //movies/${random}
     searchAndPush(URL);
     slide = $('.slider-single');
     slideTotal = slide.length - 1;
@@ -121,7 +121,7 @@ $(document).on('ready', function() {
   });
   slideInitial();
   setInterval(function(){
-    const URL = `https://themoveidb.run.goorm.io/api/v1/users/${current_user}/`; //movies/${random}
+    const URL = `https://themoveidb.herokuapp.com.io/api/v1/users/${current_user}/`; //movies/${random}
     searchAndPush(URL);
     slide = $('.slider-single');
     slideTotal = slide.length - 1;
