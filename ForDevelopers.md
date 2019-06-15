@@ -6,3 +6,6 @@ python manage.py runserver 0.0.0.0:80
 `echo 'export API_KEY이름=키를 넣는 곳' >> ~/.bashrc`
 2. 환경변수 설정 변경을 적용한다.
 `source ~/.bashrc`
+
+### heroku 배포 관련
+heroku_deployment.md 확인
